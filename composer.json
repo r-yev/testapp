@@ -1,0 +1,18 @@
+{
+    "name": "jeka/rec-man-test",
+    "autoload": {
+        "psr-4": {
+            "Jeka\\RecManTest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yevhenii Radomskyi",
+            "email": "jenia999jenia9999@gmail.com"
+        }
+    ],
+    "require": {
+        "larapack/dd": "^1.1",
+        "ext-mysqli": "*"
+    }
+}
