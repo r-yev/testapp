@@ -1,8 +1,8 @@
 <?php
 
-class User
+class User extends Model
 {
-
+    const TABLE_NAME = 'users';
     private string $firstname;
     private string $lastname;
     private string $phone;
@@ -15,6 +15,7 @@ class User
      * @param string $email
      * @param string $password
      * @param string|null $phone
+     * @param int|null $id
      */
     public function __construct(
         string $firstname,
@@ -22,6 +23,7 @@ class User
         string $email,
         string $password,
         string $phone = null,
+        int $id = null
     )
     {
         $this->firstname = $firstname;
@@ -29,6 +31,22 @@ class User
         $phone && $this->phone = $phone;
         $this->email = $email;
         $this->password = $password;
+        $id && $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function hasId(): bool
+    {
+        return !empty($this->id);
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getFirstname(): string

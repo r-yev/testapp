@@ -13,6 +13,7 @@
     ],
     "require": {
         "larapack/dd": "^1.1",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "ext-http": "*"
     }
 }

@@ -18,6 +18,7 @@ class SiteController
     <meta charset="UTF-8"/>
     <title>Login</title>
     <link rel="icon" href="https://www.svgrepo.com/show/530661/genetic-data.svg" type="image/x-icon"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta https-equiv="X-UA-Compatible" content="ie=edge"/>
    <style>
@@ -47,7 +48,7 @@ class SiteController
 	 opacity: 0.8;
 	 font-weight: 400;
 }
- form {
+ .form {
 	 padding: 40px 30px;
 	 background: #fefefe;
 	 display: flex;
@@ -56,15 +57,15 @@ class SiteController
 	 padding-bottom: 20px;
 	 width: 300px;
 }
- form h4 {
+ .form h4 {
 	 margin-bottom: 20px;
 	 color: rgba(0, 0, 0, .5);
 }
- form h4 span {
+ .form h4 span {
 	 color: rgba(0, 0, 0, 1);
 	 font-weight: 700;
 }
- form p {
+ .form p {
 	 line-height: 155%;
 	 margin-bottom: 5px;
 	 font-size: 14px;
@@ -231,6 +232,17 @@ class SiteController
 }
  
 </style>
+    <script>
+        const login = () => {
+            axios.post('/api/login', {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            }).then(({data}) => {
+                const {message} = data;
+                console.log(message);
+            });
+    };
+</script>
 </head>
 <body>
   <div class="session">
@@ -243,7 +255,7 @@ class SiteController
 			<path class="st01" d="m126 302.2c-2.3 0.7-5.7 0.2-7.7-1.2l-105-71.6c-2-1.3-3.7-4.4-3.9-6.7l-9.4-126.7c-0.2-2.4 1.1-5.6 2.8-7.2l93.2-86.4c1.7-1.6 5.1-2.6 7.4-2.3l125.6 18.9c2.3 0.4 5.2 2.3 6.4 4.4l63.5 110.1c1.2 2 1.4 5.5 0.6 7.7l-46.4 118.3c-0.9 2.2-3.4 4.6-5.7 5.3l-121.4 37.4zm63.4-102.7c2.3-0.7 4.8-3.1 5.7-5.3l19.9-50.8c0.9-2.2 0.6-5.7-0.6-7.7l-27.3-47.3c-1.2-2-4.1-4-6.4-4.4l-53.9-8c-2.3-0.4-5.7 0.7-7.4 2.3l-40 37.1c-1.7 1.6-3 4.9-2.8 7.2l4.1 54.4c0.2 2.4 1.9 5.4 3.9 6.7l45.1 30.8c2 1.3 5.4 1.9 7.7 1.2l52-16.2z"/>
 </svg>      
     </div>
-    <form action="" class="log-in" autocomplete="off"> 
+    <div action="" class="log-in form" autocomplete="off"> 
     <h4>Welcome back!</h4>
       <p>Log in to your account to view today's clients:</p>
       <div class="floating-label">
@@ -282,8 +294,8 @@ class SiteController
         </div>
         
       </div>
-      <button type="submit" onClick="return false;">Log in</button>
-    </form>
+      <button onClick="login()">Log in</button>
+    </div>
   </div>
 </body>
 </html>
@@ -303,9 +315,12 @@ HTML;
     <meta charset="UTF-8"/>
     <title>Register</title>
     <link rel="icon" href="https://www.svgrepo.com/show/530661/genetic-data.svg" type="image/x-icon"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta https-equiv="X-UA-Compatible" content="ie=edge"/>
-   <style>
+    <style>
    * {
 	 font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
 	 font-weight: 300;
@@ -332,7 +347,7 @@ HTML;
 	 opacity: 0.8;
 	 font-weight: 400;
 }
- form {
+  .form {
 	 padding: 40px 30px;
 	 background: #fefefe;
 	 display: flex;
@@ -341,15 +356,15 @@ HTML;
 	 padding-bottom: 20px;
 	 width: 300px;
 }
- form h4 {
+ .form h4 {
 	 margin-bottom: 20px;
 	 color: rgba(0, 0, 0, .5);
 }
- form h4 span {
+ .form h4 span {
 	 color: rgba(0, 0, 0, 1);
 	 font-weight: 700;
 }
- form p {
+ .form p {
 	 line-height: 155%;
 	 margin-bottom: 5px;
 	 font-size: 14px;
@@ -516,6 +531,39 @@ HTML;
 }
  
 </style>
+    <script>
+    
+    toastr.options = {
+  "closeButton": true,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+    const register = () => {
+            axios.post('/api/register', {
+                firstName: document.getElementById('firstname').value,
+                lastName: document.getElementById('lastname').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            }).then(({data}) => {
+                window.location = '/login';
+                const {message} = data;
+                console.log(message);
+            });
+    };
+</script>
 </head>
 <body>
   <div class="session">
@@ -528,47 +576,31 @@ HTML;
 			<path class="st01" d="m126 302.2c-2.3 0.7-5.7 0.2-7.7-1.2l-105-71.6c-2-1.3-3.7-4.4-3.9-6.7l-9.4-126.7c-0.2-2.4 1.1-5.6 2.8-7.2l93.2-86.4c1.7-1.6 5.1-2.6 7.4-2.3l125.6 18.9c2.3 0.4 5.2 2.3 6.4 4.4l63.5 110.1c1.2 2 1.4 5.5 0.6 7.7l-46.4 118.3c-0.9 2.2-3.4 4.6-5.7 5.3l-121.4 37.4zm63.4-102.7c2.3-0.7 4.8-3.1 5.7-5.3l19.9-50.8c0.9-2.2 0.6-5.7-0.6-7.7l-27.3-47.3c-1.2-2-4.1-4-6.4-4.4l-53.9-8c-2.3-0.4-5.7 0.7-7.4 2.3l-40 37.1c-1.7 1.6-3 4.9-2.8 7.2l4.1 54.4c0.2 2.4 1.9 5.4 3.9 6.7l45.1 30.8c2 1.3 5.4 1.9 7.7 1.2l52-16.2z"/>
 </svg>      
     </div>
-    <form action="" class="log-in" autocomplete="off"> 
+    <div action="#" class="log-in form" autocomplete="off"> 
     <h4>Welcome!</h4>
       <p>Enter required data to create an account.</p>
-      <div class="floating-label">
-        <input placeholder="Email" type="email" name="email" id="email" autocomplete="off">
-        <label for="email">Email:</label>
-        <div class="icon">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg enable-background="new 0 0 100 100" version="1.1" viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-<style type="text/css">
-	.st0{fill:none;}
-</style>
-<g transform="translate(0 -952.36)">
-	<path d="m17.5 977c-1.3 0-2.4 1.1-2.4 2.4v45.9c0 1.3 1.1 2.4 2.4 2.4h64.9c1.3 0 2.4-1.1 2.4-2.4v-45.9c0-1.3-1.1-2.4-2.4-2.4h-64.9zm2.4 4.8h60.2v1.2l-30.1 22-30.1-22v-1.2zm0 7l28.7 21c0.8 0.6 2 0.6 2.8 0l28.7-21v34.1h-60.2v-34.1z"/>
-</g>
-<rect class="st0" width="100" height="100"/>
-</svg>
-
+        <div class="floating-label">
+            <input placeholder="Firstname" type="text" name="firstname" id="firstname" autocomplete="off">
+            <label for="firstname">Firstname:</label>
         </div>
-      </div>
+        <div class="floating-label">
+            <input placeholder="Lastname" type="text" name="lastname" id="lastname" autocomplete="off">
+            <label for="lastname">Lastname:</label>
+        </div>
+        <div class="floating-label">
+            <input placeholder="Phone" type="text" name="phone" id="phone" autocomplete="off">
+            <label for="phone">Phone:</label>
+        </div>
+        <div class="floating-label">
+            <input placeholder="Email" type="email" name="email" id="email" autocomplete="off">
+            <label for="email">Email:</label>
+        </div>
       <div class="floating-label">
         <input placeholder="Password" type="password" name="password" id="password" autocomplete="off">
-        <label for="password">Password:</label>
-        <div class="icon">
-          
-          <?xml version="1.0" encoding="UTF-8"?>
-          <svg enable-background="new 0 0 24 24" version="1.1" viewBox="0 0 24 24" xml:space="preserve"              xmlns="http://www.w3.org/2000/svg">
-<style type="text/css">
-	.st0{fill:none;}
-	.st1{fill:#010101;}
-</style>
-		<rect class="st0" width="24" height="24"/>
-		<path class="st1" d="M19,21H5V9h14V21z M6,20h12V10H6V20z"/>
-		<path class="st1" d="M16.5,10h-1V7c0-1.9-1.6-3.5-3.5-3.5S8.5,5.1,8.5,7v3h-1V7c0-2.5,2-4.5,4.5-4.5s4.5,2,4.5,4.5V10z"/>
-		<path class="st1" d="m12 16.5c-0.8 0-1.5-0.7-1.5-1.5s0.7-1.5 1.5-1.5 1.5 0.7 1.5 1.5-0.7 1.5-1.5 1.5zm0-2c-0.3 0-0.5 0.2-0.5 0.5s0.2 0.5 0.5 0.5 0.5-0.2 0.5-0.5-0.2-0.5-0.5-0.5z"/>
-</svg>
-        </div>
-        
+        <label for="password">Password:</label>        
       </div>
-      <button type="submit" onClick="return false;">Create</button>
-    </form>
+      <button onClick="register()">Create</button>
+    </div>
   </div>
 </body>
 </html>

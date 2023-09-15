@@ -49,7 +49,6 @@ function loadRoutes(): void
     define('_ROUTES', $routes);
     $GLOBALS['_ROUTES'] = _ROUTES;
 }
-
 function findPhpFiles(string $directory): array
 {
     $phpFiles = [];
@@ -71,7 +70,6 @@ function findPhpFiles(string $directory): array
 
     return $phpFiles;
 }
-
 function getNamespacesAndClassesFromDirectory($directory): array
 {
     $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
@@ -100,7 +98,6 @@ function getNamespacesAndClassesFromDirectory($directory): array
 
     return $namespacesAndClasses;
 }
-
 function loadDependencies(): void
 {
     $directoryToSearch = __DIR__ . '/../app'; // Replace with your root directory
@@ -123,8 +120,12 @@ function loadDependencies(): void
     $GLOBALS['_BEANS'] = $beans;
 }
 
+function loadMigrations(): void
+{
+    require __DIR__ . '/../database/database.php';
+}
+
 loadEnvironments();
 loadRoutes();
 loadDependencies();
-
-//var_dump($GLOBALS['routes']);
+loadMigrations();
